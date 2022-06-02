@@ -11,7 +11,7 @@ CANVAS_HEIGHT = 500;
 let currentWidth = CANVAS_WIDTH;
 let currentHeight = CANVAS_HEIGHT;
 
-let color = colorpicker.value;
+let currentColor = colorpicker.value;
 
 let currentX = 0;
 let currentY = 0;
@@ -25,8 +25,6 @@ ctx.mozImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 
 const init = function () {
-  color = colorpicker.value;
-
   currentWidth = CANVAS_WIDTH;
   currentHeight = CANVAS_HEIGHT;
   canvas.width = CANVAS_WIDTH;
@@ -36,38 +34,39 @@ const init = function () {
 };
 
 canvas.onmousedown = function (event) {
-  getMousePos(canvas, event);
-  draw();
+  const pixel = getMousePos(canvas, event);
+  draw(pixel);
+  ingestNewPixel(pixel);
 };
 
 colorpicker.oninput = function () {
-  color = this.value;
+  currentColor = this.value;
 };
 
 function getMousePos(canvas, event) {
   let rect = canvas.getBoundingClientRect();
 
-  currentX = Math.floor(event.clientX - rect.left);
-  currentY = Math.floor(event.clientY - rect.top);
+  return {
+    x: Math.floor(event.clientX - rect.left),
+    y: Math.floor(event.clientY - rect.top),
+    color: currentColor,
+  };
 }
 
-function now() {
+function now(secondsBefore = 0) {
   const d = new Date();
-  const result = `${d.toISOString().slice(0, 10)} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+  const seconds = d.getSeconds() - secondsBefore;
+  const result = `${d
+    .toISOString()
+    .slice(0, 10)} ${d.getHours()}:${d.getMinutes()}:${
+    seconds < 10 ? `0${seconds}` : seconds
+  }`;
   return result;
 }
-
-function draw() {
-  ctx.beginPath();
-  ctx.fillStyle = color;
-  ctx.fillRect(currentX, currentY, 1, 1);
-  ctx.fill();
-
+function ingestNewPixel(pixel) {
   const row = {
-    x: currentX,
-    y: currentY,
+    ...pixel,
     timestamp: now(),
-    color: color,
   };
 
   fetch("https://api.tinybird.co/v0/events?name=pixels_table", {
@@ -82,4 +81,24 @@ function draw() {
   });
 }
 
+function draw(pixel) {
+  ctx.beginPath();
+  ctx.fillStyle = pixel.color;
+  ctx.fillRect(pixel.x, pixel.y, 1, 1);
+  ctx.fill();
+}
+
 init();
+
+window.setInterval(function () {
+  fetch(
+    `https://api.tinybird.co/v0/pipes/get_snapshot.json?token=p.eyJ1IjogIjM0YmRiNTJkLTRiYjYtNDljZi04ZjdjLWI4MmM3MjVmNjRmNSIsICJpZCI6ICJiYzYwZjYzOC1lYzAwLTQxYTgtODhkNS05ZmNhZmNhNmI0MDUifQ.BBKGRtAlvq_cFP-anEaaYi6WSViUWQuVAvB_kSY4qig&date_start=${now(
+      10
+    )}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      const array = data.data;
+      array.map((item) => draw(item));
+    });
+}, 1000);
