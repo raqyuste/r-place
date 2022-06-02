@@ -60,13 +60,18 @@ colorpicker.oninput = function () {
 };
 
 function now(secondsBefore = 0) {
-  const d = new Date();
-  const seconds = parseInt(d.getSeconds()) - secondsBefore;
-  const result = `${d
-    .toISOString()
-    .slice(0, 10)} ${d.getHours()}:${d.getMinutes()}:${
+  const d = new Date(Date.now() - secondsBefore * 1000);
+  const seconds = d.getSeconds();
+  const hour = d.getHours();
+  const minutes = d.getMinutes();
+
+  const result = `${d.toISOString().slice(0, 10)} ${
+    hour < 10 ? `0${hour}` : hour
+  }:${minutes < 10 ? `0${minutes}` : minutes}:${
     seconds < 10 ? `0${seconds}` : seconds
   }`;
+
+  console.log(result);
   return result;
 }
 function ingestNewPixel(pixel) {
