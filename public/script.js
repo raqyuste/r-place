@@ -49,7 +49,6 @@ function getMousePos(canvas, event) {
     x: Math.floor(event.clientX - rect.left),
     y: Math.floor(event.clientY - rect.top),
     color: currentColor,
-    timestamp: now(),
   };
 }
 
@@ -91,7 +90,8 @@ function now(secondsBefore = 0) {
   return result;
 }
 function ingestNewPixel(pixels) {
-  const ndjson = pixels.reduce((prev, current) => {
+  const pixelsWithTime = pixels.map((item) => ({ ...item, timestamp: now() }));
+  const ndjson = pixelsWithTime.reduce((prev, current) => {
     if (prev) {
       return `${prev}
       ${JSON.stringify(current)}`;
@@ -99,7 +99,7 @@ function ingestNewPixel(pixels) {
       return JSON.stringify(current);
     }
   }, "");
-
+  console.log(ndjson);
   fetch("https://api.tinybird.co/v0/events?name=pixels_table", {
     method: "post",
     headers: new Headers({
