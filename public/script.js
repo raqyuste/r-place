@@ -31,6 +31,17 @@ const init = function () {
   canvas.height = CANVAS_HEIGHT;
   canvas.style.width = `${CANVAS_WIDTH}px`;
   canvas.style.height = `${CANVAS_HEIGHT}px`;
+
+  fetch("https://api.tinybird.co/v0/pipes/get_snapshot.json?token=p.eyJ1IjogIjM0YmRiNTJkLTRiYjYtNDljZi04ZjdjLWI4MmM3MjVmNjRmNSIsICJpZCI6ICJiYzYwZjYzOC1lYzAwLTQxYTgtODhkNS05ZmNhZmNhNmI0MDUifQ.BBKGRtAlvq_cFP-anEaaYi6WSViUWQuVAvB_kSY4qig", {
+    method: "get",
+  }).then(function(response) {
+    return response.json()
+  }).then(function({data}) {
+    data.forEach(function({x,y,color}) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, 1, 1);
+    })
+  })
 };
 
 canvas.onmousedown = function (event) {
