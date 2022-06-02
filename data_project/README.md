@@ -1,4 +1,4 @@
-# Using Tinybird with an r/place
+# Using Tinybird with r/place
 
 This repository contains the data project —[datasources](./datasources), and [endpoints](./endpoints)— and [data-generator](./data-generator) scripts for an r/place example of using Tinybird.
 
@@ -56,7 +56,8 @@ tb push --fixtures
   
 Your data project is ready for realtime analysis. You can check the UI's Data flow to see how it looks.
 
-![Data flow](data_flow.jpg?raw=true "Data flow in UI")
+<img width="873" alt="image" src="https://user-images.githubusercontent.com/51535157/171652448-8ce46bbb-8194-4d6c-89e8-53f0c816a4df.png">
+
 
 ## Ingesting data using high-frequency ingestion (HFI)
 
