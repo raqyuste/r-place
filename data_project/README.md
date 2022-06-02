@@ -63,14 +63,7 @@ Your data project is ready for realtime analysis. You can check the UI's Data fl
 
 Let's add some data through the [HFI endpoint](https://www.tinybird.co/guide/high-frequency-ingestion).
 
-To do that we have created a python script to generate and send dummy events.
-
-```bash
-pip install click faker
-python3 data-generator/audit_log_events.py --repeat 100
-```
-
-Feel free to play with the parameters. You can check them with `python3 data-generator/audit_log_events.py --help`
+To do that we have created a python script to generate and send dummy events, using the file rplace.py
 
 ## Token security
 
