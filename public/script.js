@@ -32,16 +32,21 @@ const init = function () {
   canvas.style.width = `${CANVAS_WIDTH}px`;
   canvas.style.height = `${CANVAS_HEIGHT}px`;
 
-  fetch("https://api.tinybird.co/v0/pipes/get_snapshot.json?token=p.eyJ1IjogIjM0YmRiNTJkLTRiYjYtNDljZi04ZjdjLWI4MmM3MjVmNjRmNSIsICJpZCI6ICJiYzYwZjYzOC1lYzAwLTQxYTgtODhkNS05ZmNhZmNhNmI0MDUifQ.BBKGRtAlvq_cFP-anEaaYi6WSViUWQuVAvB_kSY4qig", {
-    method: "get",
-  }).then(function(response) {
-    return response.json()
-  }).then(function({data}) {
-    data.forEach(function({x,y,color}) {
-      ctx.fillStyle = color;
-      ctx.fillRect(x, y, 1, 1);
+  fetch(
+    "https://api.tinybird.co/v0/pipes/get_snapshot.json?token=p.eyJ1IjogIjM0YmRiNTJkLTRiYjYtNDljZi04ZjdjLWI4MmM3MjVmNjRmNSIsICJpZCI6ICJiYzYwZjYzOC1lYzAwLTQxYTgtODhkNS05ZmNhZmNhNmI0MDUifQ.BBKGRtAlvq_cFP-anEaaYi6WSViUWQuVAvB_kSY4qig",
+    {
+      method: "get",
+    }
+  )
+    .then(function (response) {
+      return response.json();
     })
-  })
+    .then(function ({ data }) {
+      data.forEach(function ({ x, y, color }) {
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, 1, 1);
+      });
+    });
 };
 
 canvas.onmousedown = function (event) {
@@ -66,12 +71,13 @@ function getMousePos(canvas, event) {
 
 function now(secondsBefore = 0) {
   const d = new Date();
-  const seconds = d.getSeconds() - secondsBefore;
+  const seconds = parseInt(d.getSeconds()) - secondsBefore;
   const result = `${d
     .toISOString()
     .slice(0, 10)} ${d.getHours()}:${d.getMinutes()}:${
     seconds < 10 ? `0${seconds}` : seconds
   }`;
+  console.log(result);
   return result;
 }
 function ingestNewPixel(pixel) {
