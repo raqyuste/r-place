@@ -1,5 +1,7 @@
 const colorpicker = document.getElementById("colorpicker");
 const canvas = document.getElementById("board");
+const picker = document.getElementById("picker");
+const color = document.getElementById("color");
 const ctx = canvas.getContext("2d");
 
 CANVAS_WIDTH = 1000;
@@ -74,6 +76,11 @@ canvas.onmousemove = function (event) {
 
 colorpicker.oninput = function () {
   currentColor = this.value;
+  color.style.backgroundColor = this.value;
+};
+
+picker.onclick = function () {
+  colorpicker.click();
 };
 
 function now(secondsBefore = 0) {
