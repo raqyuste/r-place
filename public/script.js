@@ -6,6 +6,9 @@ CANVAS_WIDTH = 1000;
 CANVAS_HEIGHT = 500;
 
 let currentColor = colorpicker.value;
+let isPressed = false;
+
+let pixels = [];
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
@@ -46,13 +49,27 @@ function getMousePos(canvas, event) {
     x: Math.floor(event.clientX - rect.left),
     y: Math.floor(event.clientY - rect.top),
     color: currentColor,
+    timestamp: now(),
   };
 }
 
-canvas.onmousedown = function (event) {
-  const pixel = getMousePos(canvas, event);
-  draw(pixel);
-  ingestNewPixel(pixel);
+canvas.onmousedown = function () {
+  isPressed = true;
+};
+
+canvas.onmouseup = function () {
+  isPressed = false;
+  ingestNewPixel(pixels);
+  pixels = [];
+};
+
+canvas.onmousemove = function (event) {
+  if (isPressed) {
+    const pixel = getMousePos(canvas, event);
+
+    pixels.push(pixel);
+    draw(pixel);
+  }
 };
 
 colorpicker.oninput = function () {
@@ -73,11 +90,15 @@ function now(secondsBefore = 0) {
 
   return result;
 }
-function ingestNewPixel(pixel) {
-  const row = {
-    ...pixel,
-    timestamp: now(),
-  };
+function ingestNewPixel(pixels) {
+  const ndjson = pixels.reduce((prev, current) => {
+    if (prev) {
+      return `${prev}
+      ${JSON.stringify(current)}`;
+    } else {
+      return JSON.stringify(current);
+    }
+  }, "");
 
   fetch("https://api.tinybird.co/v0/events?name=pixels_table", {
     method: "post",
@@ -87,7 +108,7 @@ function ingestNewPixel(pixel) {
       Accept: "application/json",
       "Content-Type": "application/json",
     }),
-    body: JSON.stringify(row),
+    body: ndjson,
   });
 }
 
