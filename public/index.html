@@ -3,16 +3,24 @@
         <title> Pixel Art App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div>
-            <label for="color"> COLOR </label>
-            <input type="color" id="colorpicker">
+        <div class="pickerWrapper">
+            <label for="color">Choose a color</label>
+            <div class="colorWrapper">
+                <input type="color" id="colorpicker">
+            </div>
         </div>
 
-        <div class="drawingBoard">
-            <canvas id="board"></canvas>
-        </div>
+        <main class="main">
+            <div class="drawingBoard">
+                <canvas id="board"></canvas>
+                <div class="backgroundGradient"></div>
+            </div>
+        </main>
 
         <script src="script.js" async defer></script>
     </body>

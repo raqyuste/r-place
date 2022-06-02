@@ -1,6 +1,6 @@
 # Using Tinybird with r/place
 
-This repository contains the data project —[datasources](./datasources), and [endpoints](./endpoints)— and [data-generator](./data-generator) scripts for an r/place example of using Tinybird.
+This repository contains the data project —[datasources](./datasources), and [endpoints](./endpoints)— and [data-generator](./rplace.py) scripts for an r/place example of using Tinybird.
 
 You can find more informat about this project on [r/place](https://www.reddit.com/r/place/)
 
