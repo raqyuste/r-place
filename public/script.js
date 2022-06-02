@@ -106,7 +106,7 @@ function ingestNewPixel(pixels) {
       return JSON.stringify(current);
     }
   }, "");
-  console.log(ndjson);
+
   fetch("https://api.tinybird.co/v0/events?name=pixels_table", {
     method: "post",
     headers: new Headers({
