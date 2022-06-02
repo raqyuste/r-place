@@ -12,7 +12,9 @@ SQL >
           ,y
           ,argMax(color, timestamp)
       FROM pixels_table
-    where  timestamp <= toDateTime({{DateTime(date_start)}})
+    {% if defined(date_start) %}
+      where  timestamp >= toDateTime({{DateTime(date_start)}})
+    {% end %}
     group by x,y
 
 
