@@ -35,7 +35,7 @@ const init = function () {
   canvas.style.height = `${CANVAS_HEIGHT}px`;
 };
 
-window.onmousedown = function (event) {
+canvas.onmousedown = function (event) {
   getMousePos(canvas, event);
   draw();
 };
