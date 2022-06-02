@@ -1,8 +1,6 @@
-
-TOKEN "pixels_table_write" READ
-
 DESCRIPTION >
-	This endpoints get the version filtered by timestamp
+	This endpoints get the last snapshot all of pixels (optional filter by timestamp)
+
 
 NODE endpoint
 SQL >
@@ -10,10 +8,10 @@ SQL >
     %
     SELECT x
           ,y
-          ,argMax(color, timestamp)
+          ,argMax(color, timestamp) color
       FROM pixels_table
     {% if defined(date_start) %}
-      where  timestamp >= toDateTime({{DateTime(date_start)}})
+    where  timestamp >= toDateTime({{DateTime(date_start)}})
     {% end %}
     group by x,y
 
