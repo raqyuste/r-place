@@ -71,7 +71,6 @@ function now(secondsBefore = 0) {
     seconds < 10 ? `0${seconds}` : seconds
   }`;
 
-  console.log(result);
   return result;
 }
 function ingestNewPixel(pixel) {
