@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title> Pixel Art App</title>
+        <title>Pixel Art App ・ Powered by Tinybird</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8,12 +8,19 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div class="pickerWrapper">
-            <label for="color">Choose a color</label>
-            <div class="colorWrapper">
-                <input type="color" id="colorpicker">
+        <header class="header">
+            <a class="brandLink" href="https://tinybird.co/">
+                <img class="brand" src="tinybird-logo.svg" alt="Tinybird logo">
+            </a>
+
+            <div class="pickerWrapper" id="picker">
+                <label for="color">Choose a color</label>
+                <div class="colorWrapper">
+                    <div id="color"></div>
+                    <input type="color" id="colorpicker">
+                </div>
             </div>
-        </div>
+        </header>
 
         <main class="main">
             <div class="drawingBoard">
@@ -21,7 +28,6 @@
                 <div class="backgroundGradient"></div>
             </div>
         </main>
-
         <script src="script.js" async defer></script>
     </body>
 </html>
