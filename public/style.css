@@ -8,26 +8,72 @@ html {
 
 body {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  background-color: #161724;
+  color: #25283d;
 }
 
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .drawingBoard {
-  display: grid;
-  grid-template-rows: auto;
-  justify-items: center;
-  align-items: center;
+  border-radius: 6px;
+  padding: 20px;
+  position: relative;
 }
 
+.backgroundGradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 3px;
+  background-image: linear-gradient(123.06deg,#22cd88 16.53%,#04baf5 82.92%);
+}
 
 #board {
-  margin: 100px 0;
   display: block;
   align-self: center;
-  background: #f0f0f0;
+  background: #fff;
   image-rendering: optimizeSpeed;
+  border-radius: 3px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,.05);
 }
+
+#colorpicker {
+  background: none;
+  width: 48px;
+  height: 48px;
+  border: none;
+  margin-left: 8px;
+}
+
+.pickerWrapper {
+  display: flex;
+  align-items: center;
+  border-radius: 40px;
+  background: #fff;
+  padding: 4px 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,.05);
+}
+
+.colorWrapper {
+    overflow: hidden;
+}
+
