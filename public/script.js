@@ -97,7 +97,7 @@ function now(secondsBefore = 0) {
   return result;
 }
 function ingestNewPixel(pixels) {
-  const pixelsWithTime = pixels.map((item) => ({ ...item, timestamp: now() }));
+  const pixelsWithTime = pixels.map((item) => ({ ...item, timestamp: now(), date: now() }));
   const ndjson = pixelsWithTime.reduce((prev, current) => {
     if (prev) {
       return `${prev}
